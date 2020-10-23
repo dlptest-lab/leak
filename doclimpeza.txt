@@ -1,0 +1,20 @@
+
+Set-DnsClientServerAddress -InterfaceIndex 6 -ServerAddresses ("10.0.0.10","10.0.0.1")
+Get-DnsClientServerAddress | Select-Object –ExpandProperty ServerAddresses
+Set-DnsClientServerAddress -InterfaceIndex 6 -ServerAddresses ("10.0.0.10","10.0.0.3")
+Get-DnsClientServerAddress | Select-Object –ExpandProperty ServerAddresses
+
+Get-DnsClientGlobalSetting
+Set-DnsClientGlobalSetting -SuffixSearchList @("nevermind.com", "inutero.com")
+Set-DnsClient -InterfaceIndex 6 -ConnectionSpecificSuffix "nevermind.com"
+Clear-DnsClientCache
+Get-DnsClientGlobalSetting
+Start-Sleep -Seconds 10
+ipconfig /all
+
+
+Get-DnsClientGlobalSetting
+Set-DnsClientGlobalSetting -SuffixSearchList @("symcdemos.local")
+Get-DnsClientGlobalSetting
+Start-Sleep -Seconds 10
+Set-DnsClient -InterfaceIndex 6 -ConnectionSpecificSuffix "symcdemos.local"
